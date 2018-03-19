@@ -11,11 +11,11 @@
 <%
 Finder c = new Finder(request.getParameter("PARAMS"));
 
-if (request.getParameter("OPCODE").equals("DATA")){
+//if (request.getParameter("OPCODE").equals("DATA")){
 	out.print(c.getDATA());
-}else if (request.getParameter("OPCODE").equals("GETQUOTE")){
-	out.print(c.getDATA());
-}
+//}else if (request.getParameter("OPCODE").equals("GETQUOTE")){
+//	out.print(c.getDATA());
+//}
 %>
 </body>
 </html>
