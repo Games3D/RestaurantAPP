@@ -69,16 +69,30 @@
       <option value="<?php echo $_GET["start"];?>"><?php echo $_GET["start"]; ?></option>
     </select>
     <br>
+    
+    <?php 
+		$data= array(array("Volvo",22,18),array("BMW",15,13),array("Saab",5,2),array("Land Rover",17,15));
+		?>
+   
     <b>Waypoints:</b> <br>
     <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br>
     <select multiple id="waypoints">
-      <option value="montreal, quebec">Montreal, QBC</option>
+    
+     <?php 
+		foreach($data as $line)
+			echo('<option value="'.$line[0].'">'.$line[1].'</option>');
+     
+     ?>
+     
+      <!--<option value="montreal, quebec">Montreal, QBC</option>
       <option value="toronto, ont">Toronto, ONT</option>
       <option value="chicago, il">Chicago</option>
       <option value="winnipeg, mb">Winnipeg</option>
       <option value="fargo, nd">Fargo</option>
       <option value="calgary, ab">Calgary</option>
-      <option value="spokane, wa">Spokane</option>
+      <option value="spokane, wa">Spokane</option>-->
+      
+      
     </select>
     <br>
     <b>End:</b>

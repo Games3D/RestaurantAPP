@@ -1,8 +1,7 @@
 <ul>
-	<li><a href="Home.php" style="background-color:#333;">Home</a></li>
-  <li><a href="#Profile" style="background-color:#333;">Profile</a></li>
-  <li><a href="#trips" style="background-color:#333;">Saved Trips</a></li>
-  
+	<li><a href="search.php" style="background-color:#333;">Home</a></li>
+  <li><a href="profile.php" style="background-color:#333;">Profile</a></li>
+  <li><a href="saved.php" style="background-color:#333;">Saved Trips</a></li>
   <li><a href="index.php" style="background-color:#333;">Sign out</a></li>
 </ul>
 <script>
