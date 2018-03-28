@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Welcome Home</title>
+	<title>Welcome To Search</title>
 	<link rel="stylesheet" type="text/css" href="CSS/Main.css">
 	<link rel="stylesheet" type="text/css" href="CSS/Home.css">
 	<link rel="stylesheet" type="text/css" href="CSS/search.css">
@@ -52,6 +52,22 @@
     </style>
 
 </head>
+
+<?php require_once 'connectDB.php';
+	session_start();
+	
+	//resets error vars
+	unset($_SESSION['ERROR']);
+	unset($_SESSION['ERROR_PATH']);
+	
+	if ($_SESSION["authenticated"] == "" or (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800))){
+		session_unset(); 
+		session_destroy(); 
+		header("Location: index.php"); /* Redirect browser */
+		exit();
+	}
+	$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+	?>
 
 <body>
 

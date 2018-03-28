@@ -1,0 +1,8 @@
+.search-area-wrapper {
+    background: #353b65 url("main-bg.jpg") center top no-repeat;
+        background-size: auto auto;
+    background-size: 100%;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%px;
+}
