@@ -10,15 +10,12 @@
         line-height: 30px;
         padding-left: 10px;
       }
-
       #right-panel select, #right-panel input {
         font-size: 15px;
       }
-
       #right-panel select {
         width: 100%;
       }
-
       #right-panel i {
         font-size: 12px;
       }
@@ -53,6 +50,33 @@
 
 </head>
 
+<?php require_once 'connectDB.php';
+	session_start();
+	
+	//resets error vars
+	unset($_SESSION['ERROR']);
+	unset($_SESSION['ERROR_PATH']);
+	
+	if ($_SESSION["authenticated"] == "" or (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800))){
+		session_unset(); 
+		session_destroy(); 
+		header("Location: index.php"); /* Redirect browser */
+		exit();
+	}
+	$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+ 
+ //get request for stock info
+		$urlFirst = 'https://web.njit.edu/~jp834/webapps8/Restaurant.jsp?PARAMS=1200 Grand St, Hoboken, NJ|100 1st St, Jersey City, NJ';//.$_GET['symbol'];
+		$contentsFirst = file_get_contents($urlFirst);
+		//If $contents is not a boolean FALSE value.
+		if($contentsFirst == false){
+			$_SESSION["ERROR"] = 'Get request error';
+			header('Location: Error.php');
+			return;
+		}
+		$DATA= explode("`", $contentsFirst);
+  ?>
+ 
 <body>
 
 <?php include 'Functions/navbar_main.php';?>
@@ -71,7 +95,7 @@
     <br>
     
     <?php 
-		$data= array(array("Volvo",22,18),array("BMW",15,13),array("Saab",5,2),array("Land Rover",17,15));
+		$DATA= array(array("High Bridge, NJ","High Bridge, NJ"),array("Clinton, NJ","Clinton, NJ"),array("Lebanon, NJ","Lebanon, NJ"),array("Trenton, NJ","Trenton, NJ"));
 		?>
    
     <b>Waypoints:</b> <br>
@@ -79,8 +103,8 @@
     <select multiple id="waypoints">
     
      <?php 
-		foreach($data as $line)
-			echo('<option value="'.$line[0].'">'.$line[1].'</option>');
+		foreach($DATA as $line)
+			echo('<option value="'.$line[1].'">'.$line[0].'</option>');
      
      ?>
      
@@ -114,12 +138,10 @@
           center: {lat: 41.85, lng: -87.65}
         });
         directionsDisplay.setMap(map);
-
         document.getElementById('submit').addEventListener('click', function() {
           calculateAndDisplayRoute(directionsService, directionsDisplay);
         });
       }
-
       function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         var waypts = [];
         var checkboxArray = document.getElementById('waypoints');
@@ -131,7 +153,6 @@
             });
           }
         }
-
         directionsService.route({
           origin: document.getElementById('start').value,
           destination: document.getElementById('end').value,
