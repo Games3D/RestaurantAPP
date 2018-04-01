@@ -1,5 +1,7 @@
 package utils;
 
+import static org.ehcache.config.builders.CacheManagerBuilder.newCacheManager;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,10 +17,16 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.ehcache.Cache;
+import org.ehcache.CacheManager;
+import org.ehcache.config.Configuration;
+import org.ehcache.xml.XmlConfiguration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,13 +36,61 @@ import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
 
 public class Finder {
+	
+	public class MYDataCache<T1, T2> {
+
+		private Cache<T1, T2> cache;
+		private Logger logger = LoggerFactory.getLogger(this.getClass());
+		private CacheManager cacheManager=null;
+
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		public MYDataCache(Class c1, Class c2) {	
+			Configuration xmlConfig = new XmlConfiguration(this.getClass().getResource("ehcache.xml"));
+			cacheManager = newCacheManager(xmlConfig);
+			cacheManager.init();
+
+			cache = cacheManager.getCache("basicCache", c1, c2);
+			
+			logger.info("Cache setup is done");
+		}
+
+		public T2 getFromCache(T1 key) {
+			return cache.get(key);
+		}
+
+		public ArrayList<T1> getKeysFromCache() {
+			ArrayList<T1> keys = new ArrayList<T1>();
+			cache.forEach((cur) -> keys.add(cur.getKey()));
+			return keys;
+		}
+
+		public boolean contains(T1 key) {
+			return cache.containsKey(key);
+		}
+
+		public void addToCache(T1 key, T2 data) {
+			cache.put(key, data);
+		}
+
+		public void removeFromCache(T1 key) {
+			cache.remove(key);
+		}
+
+		public void clearCache() {
+			cache.clear();
+		}
+		
+		public void close() {
+			cacheManager.close();
+		}
+	}
 	//https://developers.google.com/places/web-service/
 
 	HttpClientContext context = HttpClientContext.create();
 	HttpClient client = HttpClientBuilder.create().build();
 	ArrayList<String> DATA = new ArrayList<String>();
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static DataCache<String, String> dataCache = new DataCache(String.class, String.class);
+	MYDataCache<String, String> dataCache = new MYDataCache(String.class, String.class);
 
 	public static void main(String[] args) {
 		new Finder("");
@@ -46,8 +102,8 @@ public class Finder {
 		String[] args=parms.split("|");
 
 		//get directions from point a to point b
-		String DIRECTIONS = Directions("1200 Grand St, Hoboken, NJ", "100 1st St, Jersey City, NJ");
-		//String DIRECTIONS = Directions(args[0], args[0]);
+		//String DIRECTIONS = Directions("1200 Grand St, Hoboken, NJ", "100 1st St, Jersey City, NJ");
+		String DIRECTIONS = Directions(args[0], args[0]);
 
 
 		//get waypoints from the route
