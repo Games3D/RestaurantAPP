@@ -162,7 +162,7 @@ public class Finder {
 			STOP = DATA.size();
 		for(int count=0; count<STOP; count++) {
 			String[] line = DATA.get(count).split("`");
-			DATA.set(count, DATA.get(count)+"`"+getInfoAboutPlace(line[6]));
+			DATA.set(count, DATA.get(count)+"`"+getInfoAboutPlace(line[6])+"~");
 			//System.out.println(DATA);
 		}
 
@@ -268,9 +268,9 @@ public class Finder {
 							DATA.get("formatted_address")+ "`" +
 									DATA.get("opening_hours")+ "`" +
 									DATA.get("formatted_phone_number")+ "`" +
-									DATA.get("website")+ "`" +
-									DATA.get("photos")+ "`" +
-									DATA.get("reviews"));
+									DATA.get("website"));//+ "`" +
+									//DATA.get("photos")+ "`" +
+									//DATA.get("reviews"));
 					
 					dataCache.addToCache(place, out);//adds this object to the cache
 				}

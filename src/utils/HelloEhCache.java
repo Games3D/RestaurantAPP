@@ -17,14 +17,20 @@ public class HelloEhCache{
 	static DataCache<String, String> dataCache = new DataCache(String.class, String.class);
 
 	public static void main(String[] args) {
-		//new HelloEhCache();
+		try {
+			new HelloEhCache();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
 
 		//dataCache.addToCache("me", "meeeeeeeeeeeeee");
 		//dataCache.addToCache("me2", "meeeeejjjeee");
 		//dataCache.addToCache("me3", "meeehgheeeeeeee");
 
-		System.out.println(dataCache.getFromCache("me"));
-		System.out.println(dataCache.getKeysFromCache());
+		//System.out.println(dataCache.getFromCache("me"));
+		//System.out.println(dataCache.getKeysFromCache());
 		
 	}
 

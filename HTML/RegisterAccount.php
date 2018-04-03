@@ -39,7 +39,7 @@ if(!empty($_POST["register-user"])) {
 	//to use a hashes on the passwords use this:  md5($_POST["password"])
 	
 	if(!isset($error_message)) {
-		$query = "INSERT INTO jp834.User (username, firstname, lastname, password, email, gender, cellphone, DOB) VALUES('" . strtolower($_POST["userName"]) . "', '" . $_POST["firstName"] . "', '" . $_POST["lastName"] . "', '" . strtolower($_POST["password"]) . "', '" . strtolower($_POST["userEmail"]) . "', '" . $_POST["gender"] . "', '" . $_POST["userPhone"] . "', '" . $_POST["userDOB"] . "')";
+		$query = "INSERT INTO User (username, firstname, lastname, password, email, gender, cellphone, DOB) VALUES('" . strtolower($_POST["userName"]) . "', '" . $_POST["firstName"] . "', '" . $_POST["lastName"] . "', '" . strtolower($_POST["password"]) . "', '" . strtolower($_POST["userEmail"]) . "', '" . $_POST["gender"] . "', '" . $_POST["userPhone"] . "', '" . $_POST["userDOB"] . "')";
 		$result = $conn->query($query);
 		if(!empty($result)) {
 			$error_message = "";

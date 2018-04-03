@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if(!empty($_POST["username"]) && !empty($_POST["password"])) {
         $username = $_POST["username"];
         $password = $_POST["password"];
-		$result = $conn->query("SELECT * FROM jp834.User;");//https://www.w3schools.com/php/php_mysql_select.asp
+		$result = $conn->query("SELECT * FROM User;");//https://www.w3schools.com/php/php_mysql_select.asp
         
 		if (!$result) {
 			die('Invalid query: ' . mysql_error());

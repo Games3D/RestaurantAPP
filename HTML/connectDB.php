@@ -1,15 +1,9 @@
 
 <?php
-$servername = "sql.njit.edu";
-$username = "jp834";
-$password = "despot77";
-$dbname = "jp834";
-/*$servername = "localhost";
-$username = "se269";
-$password = "";
-$dbname = "se269";
-*/
-
+$servername = "games3dtest.ddns.net";
+$username = "NJIT_CS684";
+$password = "NJIT_CS684";
+$dbname = "NJIT_CS684";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
