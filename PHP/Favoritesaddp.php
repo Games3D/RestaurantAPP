@@ -98,8 +98,8 @@
   <div class="form-group">
     <label for="add"><br> Please choose what do you want to add: </br></label>
     <select name="favOrBl">
-    <option value="fl">Favorite</option>
-    <option value="bl">Black List</option>
+    <option value="f">Favorite</option>
+    <option value="b">Black List</option>
    
     </select><br>
   
