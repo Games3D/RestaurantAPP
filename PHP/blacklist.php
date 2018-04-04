@@ -8,7 +8,7 @@ $query = "SELECT * FROM Favorites WHERE USERNAME = '$user_Name' AND BLACKLIST = 
 
 $result = $conn->query($query); 
 	
-	echo "<h2>". $user_Name ."'s Favorites </h2>";
+	echo "<h2>". $user_Name ."'s Black List </h2>";
 $counter = 1;
 
 while($row = $result -> fetch_assoc())
