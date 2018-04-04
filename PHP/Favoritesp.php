@@ -84,7 +84,7 @@
 $user_Name = $_SESSION['username'];
 //$user_Name = 'sahar_e';
 
-$query = "SELECT * FROM Favorites WHERE USERNAME = '$user_Name' AND BLACKLIST = 'fl'";
+$query = "SELECT * FROM Favorites WHERE USERNAME = '$user_Name' AND BLACKLIST = 'f'";
 
 $result = $conn->query($query); 
 	
