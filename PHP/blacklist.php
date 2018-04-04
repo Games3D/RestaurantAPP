@@ -47,7 +47,7 @@ echo "<strong> *Place Name: </strong>". $row["FAVNAME"]."<br>";
 	
 	if($counter === 1)
 	{
-	echo "You have not added any Favorites!";
+	echo "You have not added any Black List!";
 	}
 	
 	
