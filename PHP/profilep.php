@@ -70,7 +70,7 @@
 //$user_Name = $_SESSION["USERNAME"];
 //$user_Name = $_SESSION['username'];
 //$user_Name = 'sam90';
-$user_Name = 'sahar';
+//$user_Name = 'sahar';
 
 $query = "SELECT * FROM User WHERE username = '$user_Name'";
 $result = $conn->query($query); 
