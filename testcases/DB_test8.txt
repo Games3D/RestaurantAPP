@@ -1,0 +1,8 @@
+TRUE,jared, mexican, abc place, B ,DEF place
+TRUE,jared, mexican, jhjhkj place, B ,e
+TRUE,jared, mexican, abc place, B ,DEF place
+TRUE,jared, mexkjhican, abcgh hjgplace, W ,DEF place
+TRUE,jared, mexjican, abc place, W ,DEF place
+TRUE,jared, mexjkhican, abckjklj place, B ,DEF place
+FALSE,jared, mexican, abc place, ll ,DEF place
+FALSE,jaredk, mexgghican, abchjh place, B ,DEF place

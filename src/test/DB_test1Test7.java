@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-public class DB_test1Test6 {
+public class DB_test1Test7 {
 
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 
@@ -39,51 +39,12 @@ public class DB_test1Test6 {
 		}
 		System.out.println("Connected");
 	}
-
-	@Test
-	public void testGoodInsert() {
-	/*	//connect to the DB
-		connect();
-
-		Random r= new Random(0);
-		String username="test"+r.nextInt(100);
-		System.out.println(username);
-
-		//insert into the DB
-		try {
-			Statement st=conn.createStatement();			
-			st.executeUpdate("insert into User values('test','test',"
-					+ "'"+username+"','test','555555','1999-03-04','M','me@me.com')");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			fail("insert/update issue");
-		}
-
-		//query the DB to check what made it in
-		ResultSet rs=null;
-		try {
-			Statement st=conn.createStatement();
-			rs=st.executeQuery("select count(*) from User where USERNAME='"+username+"'");
-			rs.next();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			fail("Query issue");
-		}
-
-		try {
-			System.out.println(rs.getInt(1));
-			assertEquals(rs.getInt(1), 1);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			fail("Results issue");
-		}*/
-	}
-
+	
 	@Test
 	public void testBatchInsertThenDelete() {
 		//connect to the DB
 		connect();
-		ArrayList<String[]> DATA = readFile(new File("C:/Users/Jared/git/RestaurantAPP/testcases/DB_test6.txt"));
+		ArrayList<String[]> DATA = readFile(new File("C:/Users/Jared/git/RestaurantAPP/testcases/DB_test7.txt"));
 
 		for(int i=0; i<DATA.size(); i++) {
 			String[] curTest = DATA.get(i);
@@ -91,10 +52,14 @@ public class DB_test1Test6 {
 			int status=-1;
 			try {
 				Statement st=conn.createStatement();	
-				System.out.println("insert into User values('"+curTest[1]+"','"+curTest[2]+"',"
-						+ "'"+curTest[3]+"','"+curTest[4]+"','"+curTest[5]+"','"+curTest[6]+"','"+curTest[7]+"','"+curTest[8]+"')");
-				status=st.executeUpdate("insert into User values('"+curTest[1]+"','"+curTest[2]+"',"
-						+ "'"+curTest[3]+"','"+curTest[4]+"','"+curTest[5]+"','"+curTest[6]+"','"+curTest[7]+"','"+curTest[8]+"')");
+				System.out.println("insert into Routes values('"+curTest[1]+"','"+curTest[2]+"',"
+						+ "'"+curTest[3]+"','"+curTest[4]+"','"+curTest[5]+"','"+curTest[6]+"','"+curTest[7]+"','"+curTest[8]+"','"+curTest[9]+"','"+curTest[10]+"',"
+						+ "'"+curTest[11]+"','"+curTest[12]+"','"+curTest[13]+"','"+curTest[14]+"','"+curTest[15]+"','"+curTest[16]+"','"+curTest[17]+"',"
+						+ "'"+curTest[18]+"','"+curTest[19]+"','"+curTest[20]+"','"+curTest[21]+"','"+curTest[22]+"','"+curTest[23]+"')");
+				status=st.executeUpdate("insert into Routes values('"+curTest[1]+"','"+curTest[2]+"',"
+						+ "'"+curTest[3]+"','"+curTest[4]+"','"+curTest[5]+"','"+curTest[6]+"','"+curTest[7]+"','"+curTest[8]+"','"+curTest[9]+"','"+curTest[10]+"',"
+						+ "'"+curTest[11]+"','"+curTest[12]+"','"+curTest[13]+"','"+curTest[14]+"','"+curTest[15]+"','"+curTest[16]+"','"+curTest[17]+"',"
+						+ "'"+curTest[18]+"','"+curTest[19]+"','"+curTest[20]+"','"+curTest[21]+"','"+curTest[22]+"','"+curTest[23]+"')");
 				st.close();				
 			} catch (SQLException e) {
 				//e.printStackTrace();
@@ -109,8 +74,8 @@ public class DB_test1Test6 {
 			//delete from the DB
 			try {
 				Statement st=conn.createStatement();	
-				System.out.println("delete from User where username='"+curTest[3]+"'");
-				status=st.executeUpdate("delete from User where username='"+curTest[3]+"'");
+				System.out.println("delete from Routes where username='"+curTest[1]+"'");
+				status=st.executeUpdate("delete from Routes where username='"+curTest[1]+"'");
 				st.close();				
 			} catch (SQLException e) {
 				//e.printStackTrace();
@@ -128,7 +93,7 @@ public class DB_test1Test6 {
 
 			String st;
 			while ((st = br.readLine()) != null)
-				results.add(st.split(","));
+				results.add(st.split("|"));
 			
 			br.close();
 		} catch (FileNotFoundException e) {

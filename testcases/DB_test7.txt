@@ -1,0 +1,7 @@
+TRUE|jared|here, nj|there, ny|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj
+TRUE|jared|here, nj|there, ny|||||||||||||||||||||
+TRUE|jared|here, nj|there, ny||stopa, nj|stopa, nj||stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj
+TRUE|jared|here, nj|there, ny|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj||stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj
+TRUE|jared|here, nj|there, ny|stopa, nj|stopa, nj|stopa, nj|stopa, nj||stopa, nj|stopa, nj||stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj
+TRUE|jared|here, nj|there, ny|||stopa, nj||stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj
+TRUE|jared|here, nj|there, ny|stopa, nj||stopa, nj||stopa, nj||stopa, nj||||stopa, nj|||stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj|stopa, nj

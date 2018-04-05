@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-public class DB_test1Test6 {
+public class DB_test1Test8 {
 
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 
@@ -41,45 +41,6 @@ public class DB_test1Test6 {
 	}
 
 	@Test
-	public void testGoodInsert() {
-	/*	//connect to the DB
-		connect();
-
-		Random r= new Random(0);
-		String username="test"+r.nextInt(100);
-		System.out.println(username);
-
-		//insert into the DB
-		try {
-			Statement st=conn.createStatement();			
-			st.executeUpdate("insert into User values('test','test',"
-					+ "'"+username+"','test','555555','1999-03-04','M','me@me.com')");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			fail("insert/update issue");
-		}
-
-		//query the DB to check what made it in
-		ResultSet rs=null;
-		try {
-			Statement st=conn.createStatement();
-			rs=st.executeQuery("select count(*) from User where USERNAME='"+username+"'");
-			rs.next();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			fail("Query issue");
-		}
-
-		try {
-			System.out.println(rs.getInt(1));
-			assertEquals(rs.getInt(1), 1);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			fail("Results issue");
-		}*/
-	}
-
-	@Test
 	public void testBatchInsertThenDelete() {
 		//connect to the DB
 		connect();
@@ -91,10 +52,10 @@ public class DB_test1Test6 {
 			int status=-1;
 			try {
 				Statement st=conn.createStatement();	
-				System.out.println("insert into User values('"+curTest[1]+"','"+curTest[2]+"',"
-						+ "'"+curTest[3]+"','"+curTest[4]+"','"+curTest[5]+"','"+curTest[6]+"','"+curTest[7]+"','"+curTest[8]+"')");
-				status=st.executeUpdate("insert into User values('"+curTest[1]+"','"+curTest[2]+"',"
-						+ "'"+curTest[3]+"','"+curTest[4]+"','"+curTest[5]+"','"+curTest[6]+"','"+curTest[7]+"','"+curTest[8]+"')");
+				System.out.println("insert into Favorites values('"+curTest[1]+"','"+curTest[2]+"',"
+						+ "'"+curTest[3]+"','"+curTest[4]+"','"+curTest[5]+"')");
+				status=st.executeUpdate("insert into Favorites values('"+curTest[1]+"','"+curTest[2]+"',"
+						+ "'"+curTest[3]+"','"+curTest[4]+"','"+curTest[5]+"')");
 				st.close();				
 			} catch (SQLException e) {
 				//e.printStackTrace();
@@ -109,8 +70,8 @@ public class DB_test1Test6 {
 			//delete from the DB
 			try {
 				Statement st=conn.createStatement();	
-				System.out.println("delete from User where username='"+curTest[3]+"'");
-				status=st.executeUpdate("delete from User where username='"+curTest[3]+"'");
+				System.out.println("delete from Favorites where username='"+curTest[1]+"'");
+				status=st.executeUpdate("delete from Favorites where username='"+curTest[1]+"'");
 				st.close();				
 			} catch (SQLException e) {
 				//e.printStackTrace();
