@@ -1,10 +1,17 @@
 package utils;
 
 import static org.ehcache.config.builders.CacheManagerBuilder.newCacheManager;
+import static org.junit.Assert.fail;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
@@ -86,6 +93,14 @@ public class Finder {
 	}
 	//https://developers.google.com/places/web-service/
 
+	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+
+	/*Database credentials for AFS */
+	static final String DB_URL ="jdbc:mysql://games3dcreations.ddns.net:3306/NJIT_CS684";
+	static final String USER = "NJIT_CS684";
+	static final String PASS = "NJIT_CS684";
+	Connection conn = null;
+
 	HttpClientContext context = HttpClientContext.create();
 	HttpClient client = HttpClientBuilder.create().build();
 	ArrayList<String> DATA = new ArrayList<String>();
@@ -93,11 +108,12 @@ public class Finder {
 	MYDataCache<String, String> dataCache = new MYDataCache(String.class, String.class);
 
 	public static void main(String[] args) {
-		new Finder("");
+		new Finder("1200 Grand St, Hoboken, NJ|100 1st St, Jersey City, NJ|Jared");
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unlikely-arg-type" })
 	public Finder(String parms) {
+		connect();
 
 		String[] args=parms.split("|");
 
@@ -129,7 +145,25 @@ public class Finder {
 			e.printStackTrace();
 		}
 
+		//figures out if the item is black listed or white listed and adjusts the rating for the next sort to move it
+		final ArrayList<String> black=getBlackList(args[2]);
+		final ArrayList<String> white=getWhiteList(args[2]);
 
+		for(int g=0; g<DATA.size(); g++) {
+			String curLineBIG=DATA.get(g);
+			String[] curLine = curLineBIG.split("`");
+			
+			//sorting by white list
+			if (Arrays.asList(white).contains(curLine[3]))
+				curLine[3]="5";
+
+			//sorting by black list
+			if (Arrays.asList(black).contains(curLine[3]))
+				curLine[3]="1";
+			
+			DATA.set(g, String.join("`", curLine));
+		}
+		
 		//takes the list from all waypoints and finds the top 20 results
 		DATA=(ArrayList<String>) DATA.stream().distinct().collect(Collectors.toList());
 		Collections.sort(DATA, new Comparator<String>() {
@@ -168,6 +202,20 @@ public class Finder {
 
 		System.out.println("Total found: "+DATA.size()+"\n\nKEYS:"+dataCache.getKeysFromCache().size());
 		dataCache.close();
+	}
+	
+	private void connect() {
+		try {
+			//Register JDBC driver
+			Class.forName("com.mysql.jdbc.Driver");
+			//Open a connection
+			System.out.println("Connecting to database...");
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+		} catch (SQLException | ClassNotFoundException e) {
+			System.out.println("Error while connecting to database");
+			fail("Connection issue");
+		}
+		System.out.println("Connected");
 	}
 
 	public String getDATA() {
@@ -302,5 +350,43 @@ public class Finder {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 		return gson.toJson(directionResult);
+	}
+
+	public ArrayList<String> getBlackList(String User) {
+		ArrayList<String> results=new ArrayList<String>();
+		try {
+			Statement st=conn.createStatement();	
+			ResultSet RS=st.executeQuery("select * from Favorites where username='"+User+"' and BLACKLIST='B'");
+
+			while(RS.next()) {
+				results.add(RS.getString("FAVNAME"));
+			}
+
+			RS.close();
+			st.close();				
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return results;
+	}
+
+	public ArrayList<String> getWhiteList(String User) {
+		ArrayList<String> results=new ArrayList<String>();
+		try {
+			Statement st=conn.createStatement();	
+			ResultSet RS=st.executeQuery("select * from Favorites where username='"+User+"' and BLACKLIST='W'");
+
+			while(RS.next()) {
+				results.add(RS.getString("FAVNAME"));
+			}
+
+			RS.close();
+			st.close();				
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return results;
 	}
 }
