@@ -1,4 +1,17 @@
-<?php include ('connectDB.php');  session_start();?>
+<?php include ('connectDB.php');  session_start();
+
+	//resets error vars
+	unset($_SESSION['ERROR']);
+	unset($_SESSION['ERROR_PATH']);
+	
+	if ($_SESSION["authenticated"] == "" or (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800))){
+		session_unset(); 
+		session_destroy(); 
+		header("Location: index.php"); /* Redirect browser */
+		exit();
+	}
+	$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+$user_Name = $_SESSION['USER'];?>
 
 <!DOCTYPE html>
 
@@ -81,7 +94,7 @@
 
 <?php
 
-$user_Name = $_SESSION['username'];
+//$user_Name = $_SESSION['username'];
 //$user_Name = 'sahar_e';
 
 $query = "SELECT * FROM Favorites WHERE USERNAME = '$user_Name' AND BLACKLIST = 'W'";
