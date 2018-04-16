@@ -65,17 +65,17 @@
 <?php include ( 'navbar_main.php');?>
 
 <head>
+
 <body>
-<div style="background:#ffffff ; padding: 100px;" contextmenu="mymenu">
+<div style="background:	#ffffff ;padding: 100px;" contextmenu="mymenu">
 </head>
 </body>
 
 
-
-  <li> <button type = "submit"> <a href="Favoritesaddp.php" style="background-color:#007acc;">Add Favorites  </a></button>
- <button  type = "submit"><a href="Deletep.php" style="background-color:#007acc;">Delete Favorites</a></button></li>
- 
-
+<ul>
+  <li> <button type = "submit"> <a href="Favoritesadd.php" style="background-color:#007acc;"> Add </a></button>
+ <button  type = "submit"><a href="delete.php" style="background-color:#007acc;"> Delete </a></button></li>
+</ul>
 <div class="container"style="padding-top:70px;width:500px;">
 
 
@@ -84,16 +84,27 @@
 $user_Name = $_SESSION['username'];
 //$user_Name = 'sahar_e';
 
-$query = "SELECT * FROM Favorites WHERE USERNAME = '$user_Name' AND BLACKLIST = 'f'";
+$query = "SELECT * FROM Favorites WHERE USERNAME = '$user_Name' AND BLACKLIST = 'W'";
 
 $result = $conn->query($query); 
 	
 	echo "<h2>". $user_Name ."'s Favorites </h2>";
 $counter = 1;
 
+$checkSQL = "SELECT * FROM Favorites WHERE USERNAME = '$user_Name' AND BLACKLIST = 'W'";
+
+//$checkSQL = "SELECT * FROM Favorites WHERE USERNAME = '$user_Name'";
+$result = mysqli_query($conn, $checkSQL);
+$count = mysqli_num_rows($result);
+	
+	if($count === 0)
+	{
+	echo "You have not added any Favorites!";
+	}
+	else{
 while($row = $result -> fetch_assoc())
 {
-	if (!empty($row["FOODTYPE"] ) )
+	if (!empty($row['FOODTYPE'] ) )
 	{
 //	echo "<br><strong>" - </strong>";
 
@@ -101,7 +112,7 @@ echo "<strong> *Favorit Food Type : </strong>". $row["FOODTYPE"]."<br>";
 	}
 
 
-	if(!empty($row["FAVPLACES"]))
+	if(!empty($row['FAVPLACES']))
 	{	
 //	echo "<br><strong>". $counter. " - </strong>";
 
@@ -117,18 +128,11 @@ echo "<strong> *Place Name: </strong>". $row["FAVNAME"]."<br>";
     }
 
 
-	$counter++;
+	//$counter++;
 
 	echo "<br>";	
-
+}
 	}
-	
-	if($counter === 1)
-	{
-	echo "You have not added any Favorites!";
-	}
-	
-	
 	
 ?>
 	
