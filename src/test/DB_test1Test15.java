@@ -36,10 +36,72 @@ public class DB_test1Test15 {
 	}
 
 	@Test
-	public void testMassRouteInsert() {
+	public void FavTrigger1() {
 		//connect to the DB
 		connect();
 
+		//insert into the DB
+		try {
+			Statement st=conn.createStatement();			
+			int results=st.executeUpdate("insert into User values('jared','Mexican',"
+					+ "'23 fav rd','B','place a'");
+			
+			assertTrue("this didnt get inserted when it should of",results==1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			fail("insert/update issue");
+		}
+	}
+	
+	@Test
+	public void FavTrigger2() {
+		//connect to the DB
+		connect();
+
+		//insert into the DB
+		try {
+			Statement st=conn.createStatement();			
+			int results=st.executeUpdate("insert into User values('jared','Mexican',"
+					+ "'23 fav rd','W','place a'");
+			
+			assertTrue("this didnt get inserted when it should of",results==1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			fail("insert/update issue");
+		}
+	}
+	
+	@Test
+	public void FavTrigger3() {
+		//connect to the DB
+		connect();
+
+		//insert into the DB
+		try {
+			Statement st=conn.createStatement();			
+			int results=st.executeUpdate("insert into User values('jared','Mexican',"
+					+ "'23 fav rd','b','place a'");
+			fail("the trigger didnt work");
+			//assertTrue("this didnt get inserted when it should of",results==1);
+		} catch (SQLException e) {
+		}
+	}
+	
+	@Test
+	public void FavTrigger4() {
+		//connect to the DB
+		connect();
+
+		//insert into the DB
+		try {
+			Statement st=conn.createStatement();			
+			int results=st.executeUpdate("insert into User values('jared','Mexican',"
+					+ "'23 fav rd','B','place a'");
+			
+			fail("the trigger didnt work");
+			//assertTrue("this didnt get inserted when it should of",results==1);
+		} catch (SQLException e) {
+		}
 	}
 
 }
