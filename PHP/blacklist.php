@@ -1,31 +1,41 @@
 
 <?php
-
 $user_Name = $_SESSION['username'];
 //$user_Name = 'sahar_e';
 
-$query = "SELECT * FROM Favorites WHERE USERNAME = '$user_Name' AND BLACKLIST = 'bl'";
+$query = "SELECT * FROM Favorites WHERE USERNAME = '$user_Name' AND BLACKLIST = 'B'";
 
 $result = $conn->query($query); 
 	
 	echo "<h2>". $user_Name ."'s Black List </h2>";
-$counter = 1;
 
+
+$checkSQL = "SELECT * FROM Favorites WHERE USERNAME = '$user_Name' AND BLACKLIST = 'B'";
+
+//$checkSQL = "SELECT * FROM Favorites WHERE USERNAME = '$user_Name'";
+$result = mysqli_query($conn, $checkSQL);
+$count = mysqli_num_rows($result);
+	
+	if($count === 0)
+	{
+	echo "You have not added any information in your Black List!";
+	}
+	else{
 while($row = $result -> fetch_assoc())
 {
-	if (!empty($row["FOODTYPE"] ) )
+	if (!empty($row['FOODTYPE'] ) )
 	{
 //	echo "<br><strong>" - </strong>";
 
-echo "<strong> *Favorit Food Type : </strong>". $row["FOODTYPE"]."<br>";
+echo "<strong> *Food Type : </strong>". $row["FOODTYPE"]."<br>";
 	}
 
 
-	if(!empty($row["FAVPLACES"]))
+	if(!empty($row['FAVPLACES']))
 	{	
 //	echo "<br><strong>". $counter. " - </strong>";
 
-echo "<strong> *Favorit Place: </strong>". $row["FAVPLACES"]."<br>";
+echo "<strong> *Restaurant's Address: </strong>". $row["FAVPLACES"]."<br>";
     }
 	
 	
@@ -33,24 +43,13 @@ echo "<strong> *Favorit Place: </strong>". $row["FAVPLACES"]."<br>";
 	{	
 //	echo "<br><strong>". $counter. " - </strong>";
 
-echo "<strong> *Place Name: </strong>". $row["FAVNAME"]."<br>";
+echo "<strong> *Restaurant's Name: </strong>". $row["FAVNAME"]."<br>";
     }
 
 
-	$counter++;
+	//$counter++;
 
 	echo "<br>";	
-
+}
 	}
-	
-
-	
-	if($counter === 1)
-	{
-	echo "You have not added any Black List!";
-	}
-	
-	
-	
 ?>
-	
