@@ -69,14 +69,14 @@
 <head>
 
 <body>
-<div style="background:	#ffffff ;padding: 100px;" contextmenu="mymenu">
+<div style="background:	#f ;padding: 100px;" >
 </head>
 </body>
 
 <ul>
   <li> 
- <button type = "submit"><a href="Deletep.php" 
- style="background-color:#007acc;">Delete Favorites</a></button></li>
+ <button type = "submit"><a href="delete.php" 
+ style="background-color:#007acc;"> Delete </a></button></li>
  </ul>
 
 
@@ -87,7 +87,7 @@
 
 <div class="container"style="padding-top:70px;width:500px;">
 
-<form  action ="Favoritesaddp.php" method="post">
+<form  action ="Favoritesadd.php" method="post">
 
 
 <!-- <br><strong>Favorit Food Radius: </strong><input type="text" name="places"><br>
@@ -98,27 +98,26 @@
   <div class="form-group">
     <label for="add"><br> Please choose what do you want to add: </br></label>
     <select name="favOrBl">
-    <option value="f">Favorite</option>
-    <option value="b">Black List</option>
-   
+    <option value="W">Favorite</option>
+    <option value="B">Black List</option>   
     </select><br>
   
 
   <div class="form-group">
-    <label for="add"><br> Favorite Food Type:</br></label>
+    <label for="add"><br> Restaurant's Food Type:</br></label>
     <input type="text" class="form-control" id="t" name="t">
   </div>
   <div>
 
 
   <div class="form-group">
-    <label for="add"><br> Favorite Food Places:</br></label>
+    <label for="add"><br> Restaurant's Address:</br></label>
     <input type="text" class="form-control" id="pl" name="pl">
   </div>
 
 
   <div class="form-group">
-    <label for="add"><br> Place's Name:</br></label>
+    <label for="add"><br> Restaurant's Name:</br></label>
     <input type="text" class="form-control" id="fname" name="fname">
   </div>
   <div>
@@ -161,43 +160,44 @@ $fl = $_POST['favOrBl'];
 //echo $user_Name;
 //echo $t;
 //echo $pl;
-$checkSQL = "SELECT * FROM Favorites WHERE USERNAME = '$user_Name' AND FAVPLACES = '$pl' AND FAVNAME ='$fname'  ";
+$checkSQL = "SELECT * FROM Favorites WHERE USERNAME = '$user_Name' AND FAVPLACES = '$pl' AND FAVNAME ='$fname'";
 
 //$checkSQL = "SELECT * FROM Favorites WHERE USERNAME = '$user_Name'";
-$result = mysqli_query($conn, $checkSQL);
-$count = mysqli_num_rows($result);
-
-if( $count < 1 && !empty($pl) && !empty($fname) && !empty($t))
-	
-	{
-$SQL = "INSERT INTO Favorites (USERNAME, FOODTYPE, FAVPLACES,FAVNAME, BLACKLIST) 
-VALUES ('$user_Name','$t','$pl', '$fname', '$fl')";
+$results = mysqli_query($conn, $checkSQL);
+$count = mysqli_num_rows($results);
 
 
-if ($conn->multi_query($SQL) === TRUE)
-{
-    echo "<br>New records created successfully</br>";
-}
-
- else {
-    echo "<br>Error - Try Again </br>";
-  }
-}
-else if (empty($pl) || empty($fname) || empty($t)){
-	
+   if (empty($pl) || empty($fname) || empty($t)){
+	//echo $count;
     echo "<br>Error - All Fields are require </br>";
-  }
-  else 
-  {
-	  echo "Error - Duplicate Value";
+	die();
   }
 
+  $SQL = "INSERT INTO Favorites(USERNAME, FOODTYPE, FAVPLACES,FAVNAME, BLACKLIST) 
+VALUES ('$user_Name','$t','$pl', '$fname', '$fl')";
+    $resultss = mysqli_query($conn, $SQL);
+ 
+ if( $count != 0 )
+	{
+		  echo $count;
+	  echo "Error - Duplicate Value";
+  die();
+	}
+
+ 
+if ( $resultss === TRUE) 
+{
+    echo "<br>Added successfully</br>";
+} 
+else {
+    echo "Error: " . $SQL . "<br>" . $conn->error;
+}
 
 
 $conn->close();
+
+
 }
-
-
 //header("refresh:2, url =Favoritesp.php")
 
 ?>
