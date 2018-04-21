@@ -1,57 +1,32 @@
-package test;
+package tests_Jared;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import org.junit.Test;
 
+import testingLIB.DBconn;
+import testingLIB.FileUtils;
+
 public class DB_test1Test7 {
 
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-
-	/*Database credentials for AFS */
-	static final String DB_URL ="jdbc:mysql://games3dcreations.ddns.net:3306/NJIT_CS684";
-	static final String USER = "NJIT_CS684";
-	static final String PASS = "NJIT_CS684";
-	Connection conn = null;
-
-	public void connect() {
-		try {
-			//Register JDBC driver
-			Class.forName("com.mysql.jdbc.Driver");
-			//Open a connection
-			System.out.println("Connecting to database...");
-			conn = DriverManager.getConnection(DB_URL,USER,PASS);
-		} catch (SQLException | ClassNotFoundException e) {
-			System.out.println("Error while connecting to database");
-			fail("Connection issue");
-		}
-		System.out.println("Connected");
-	}
-	
 	@Test
 	public void testBatchInsertThenDelete() {
 		//connect to the DB
-		connect();
-		ArrayList<String[]> DATA = readFile(new File("C:/Users/Jared/git/RestaurantAPP/testcases/DB_test7.txt"));
+		DBconn DB = new DBconn();
+		
+		ArrayList<String[]> DATA = FileUtils.readFile(new File("C:/Users/Jared/git/RestaurantAPP/TestCases - Jared/DB_test7.txt"));
 
 		for(int i=0; i<DATA.size(); i++) {
 			String[] curTest = DATA.get(i);
 			//insert into the DB
 			int status=-1;
 			try {
-				Statement st=conn.createStatement();	
+				Statement st=DB.conn.createStatement();	
 				System.out.println("insert into Routes values('"+curTest[1]+"','"+curTest[2]+"',"
 						+ "'"+curTest[3]+"','"+curTest[4]+"','"+curTest[5]+"','"+curTest[6]+"','"+curTest[7]+"','"+curTest[8]+"','"+curTest[9]+"','"+curTest[10]+"',"
 						+ "'"+curTest[11]+"','"+curTest[12]+"','"+curTest[13]+"','"+curTest[14]+"','"+curTest[15]+"','"+curTest[16]+"','"+curTest[17]+"',"
@@ -73,7 +48,7 @@ public class DB_test1Test7 {
 			
 			//delete from the DB
 			try {
-				Statement st=conn.createStatement();	
+				Statement st=DB.conn.createStatement();	
 				System.out.println("delete from Routes where username='"+curTest[1]+"'");
 				status=st.executeUpdate("delete from Routes where username='"+curTest[1]+"'");
 				st.close();				
@@ -85,24 +60,4 @@ public class DB_test1Test7 {
 			assertTrue("Line "+i+" Delete didn't work", status != 0);
 		}
 	}
-
-	private ArrayList<String[]> readFile(File file) {		 
-		ArrayList<String[]> results = new ArrayList<String[]>();
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(file));
-
-			String st;
-			while ((st = br.readLine()) != null)
-				results.add(st.split("|"));
-			
-			br.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return results;
-	}
-
 }

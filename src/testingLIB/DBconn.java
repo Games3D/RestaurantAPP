@@ -1,6 +1,7 @@
-package test;
+package testingLIB;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,21 +9,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.junit.jupiter.api.Test;
-
-class DB_test1Test4 {
-
+public class DBconn {
+	
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-
-	/*Database credentials for AFS */
-	static final String DB_URL ="jdbc:mysql://sql.njit.edu/jp834";
-	static final String USER = "jp834";
-	static final String PASS = "despot77";
-	static Connection conn = null;
+	public Connection conn = null;
+	static final String DB_URL ="jdbc:mysql://games3dcreations.ddns.net:3306/NJIT_CS684";
+	static final String USER = "NJIT_CS684";
+	static final String PASS = "NJIT_CS684";
 	static int size = 50;
 
-	@Test
-	void test() {
+	public DBconn() {
 		try {
 			//Register JDBC driver
 			Class.forName("com.mysql.jdbc.Driver");
@@ -30,37 +26,14 @@ class DB_test1Test4 {
 			System.out.println("Connecting to database...");
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 		} catch (SQLException | ClassNotFoundException e) {
-			System.out.println("Error while connecting to database");
+			fail("Error while connecting to database");
 		}
-		
+		System.out.println("Connected");
 		try {
-			String USERNAME="";
-			String FOODTYPE="";
-			String FAVPLACES="";
-			String BLACKLIST="";
-			String FAVNAME="";
-			
-			DBupdate("INSERT INTO Favorites "
-					+ "(USERNAME, FOODTYPE, FAVPLACES, BLACKLIST, FAVNAME)"
-					+ " VALUES('"
-					+USERNAME+"','"
-					+FOODTYPE+"','"
-					+FAVPLACES+"','"
-					+BLACKLIST+"','"
-					+FAVNAME);
-			ResultSet RS=null;
-			RS=DBqueryRS("select * from Favorites where USERNAME='"+USERNAME+"'", RS);
-			
-			assertEquals(RS.getString("USERNAME").trim(),USERNAME);
-			assertEquals(RS.getString("FOODTYPE").trim(),FOODTYPE);
-			assertEquals(RS.getString("FAVPLACES").trim(),FAVPLACES);
-			assertEquals(RS.getString("BLACKLIST").trim(),BLACKLIST);
-			assertEquals(RS.getString("FAVNAME").trim(),FAVNAME);
+			assertTrue(!conn.isClosed());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		//fail("Not yet implemented");
 	}
 	
 	public String DBquery(String query){
