@@ -20,8 +20,8 @@ public class DB_test1Test15 {
 		//insert into the DB
 		try {
 			Statement st=DB.conn.createStatement();			
-			int results=st.executeUpdate("insert into User values('jared','Mexican',"
-					+ "'23 fav rd','B','place a'");
+			int results=st.executeUpdate("insert into Favorites values('jared','Mexican',"
+					+ "'23 fav rd','B','place akk')");
 			
 			assertTrue("this didnt get inserted when it should of",results==1);
 		} catch (SQLException e) {
@@ -38,8 +38,8 @@ public class DB_test1Test15 {
 		//insert into the DB
 		try {
 			Statement st=DB.conn.createStatement();			
-			int results=st.executeUpdate("insert into User values('jared','Mexican',"
-					+ "'23 fav rd','W','place a'");
+			int results=st.executeUpdate("insert into Favorites values('jared','Mexican',"
+					+ "'23 fav rd','W','place sssk')");
 			
 			assertTrue("this didnt get inserted when it should of",results==1);
 		} catch (SQLException e) {
@@ -57,8 +57,8 @@ public class DB_test1Test15 {
 		//insert into the DB
 		try {
 			Statement st=DB.conn.createStatement();			
-			int results=st.executeUpdate("insert into User values('jared','Mexican',"
-					+ "'23 fav rd','b','place a'");
+			int results=st.executeUpdate("insert into Favorites values('jared','Mexican',"
+					+ "'23 fav rd','b','place akk')");
 			fail("the trigger didnt work");
 			//assertTrue("this didnt get inserted when it should of",results==1);
 		} catch (SQLException e) {
@@ -74,8 +74,8 @@ public class DB_test1Test15 {
 		//insert into the DB
 		try {
 			Statement st=DB.conn.createStatement();			
-			int results=st.executeUpdate("insert into User values('jared','Mexican',"
-					+ "'23 fav rd','B','place a'");
+			int results=st.executeUpdate("insert into Favorites values('jared','Mexican',"
+					+ "'23 fav rd','B','place akk')");
 			
 			fail("the trigger didnt work");
 			//assertTrue("this didnt get inserted when it should of",results==1);
