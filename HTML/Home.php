@@ -66,7 +66,7 @@
 	$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
  
  //get request for stock info
-		$urlFirst = 'https://web.njit.edu/~jp834/webapps8/Restaurant.jsp?PARAMS=1200 Grand St, Hoboken, NJ|100 1st St, Jersey City, NJ';//.$_GET['symbol'];
+		$urlFirst = 'https://web.njit.edu/~jp834/webapps8/Restaurant.jsp?PARAMS=1200 Grand St, Hoboken, NJ|100 1st St, Jersey City, NJ|jared';//.$_GET['symbol'];
 		$contentsFirst = file_get_contents($urlFirst);
 		//If $contents is not a boolean FALSE value.
 		if($contentsFirst == false){
@@ -74,7 +74,8 @@
 			header('Location: Error.php');
 			return;
 		}
-		$DATA= explode("`", $contentsFirst);
+		$DATA= explode("~", $contentsFirst);
+	//echo $DATA[0];
   ?>
  
 <body>
@@ -93,19 +94,19 @@
       <option value="<?php echo $_GET["start"];?>"><?php echo $_GET["start"]; ?></option>
     </select>
     <br>
-    
-    <?php 
-		$DATA= array(array("High Bridge, NJ","High Bridge, NJ"),array("Clinton, NJ","Clinton, NJ"),array("Lebanon, NJ","Lebanon, NJ"),array("Trenton, NJ","Trenton, NJ"));
-		?>
-   
+      
     <b>Waypoints:</b> <br>
     <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br>
     <select multiple id="waypoints">
     
      <?php 
-		foreach($DATA as $line)
-			echo('<option value="'.$line[1].'">'.$line[0].'</option>');
-     
+		//echo $DATA[0];
+	
+		foreach($DATA as $line){
+			$DATAR= explode("`", $line);
+		//	echo "d";//$DATAR[0];			
+		  echo('<option value="'.$DATAR[3].'">'.$DATAR[0].'</option>');
+		//}
      ?>
      
       <!--<option value="montreal, quebec">Montreal, QBC</option>
@@ -184,8 +185,5 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCS-aIwl2FrJkJGwfO0K-DllGxnVkMvMmg&callback=initMap">
     </script>
   </body>
-
-
-	  
-</body>
+  </body>
 </html>

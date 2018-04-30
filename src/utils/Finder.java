@@ -1,7 +1,6 @@
 package utils;
 
 import static org.ehcache.config.builders.CacheManagerBuilder.newCacheManager;
-import static org.junit.Assert.fail;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -108,7 +107,7 @@ public class Finder {
 	MYDataCache<String, String> dataCache = new MYDataCache(String.class, String.class);
 
 	public static void main(String[] args) {
-		new Finder("1200 Grand St, Hoboken, NJ|100 1st St, Jersey City, NJ|Jared");
+		System.out.println(new Finder("1200 Grand St, Hoboken, NJ|100 1st St, Jersey City, NJ|Jared").getDATA());
 	}
 
 	@SuppressWarnings({ "rawtypes", "unlikely-arg-type" })
@@ -213,7 +212,6 @@ public class Finder {
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 		} catch (SQLException | ClassNotFoundException e) {
 			System.out.println("Error while connecting to database");
-			fail("Connection issue");
 		}
 		System.out.println("Connected");
 	}
