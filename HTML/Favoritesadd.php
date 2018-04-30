@@ -1,8 +1,17 @@
-<?php include ('connectDB.php'); 
-?>
-<?php session_start();
-?>
+<?php include ('connectDB.php');  session_start();
 
+	//resets error vars
+	unset($_SESSION['ERROR']);
+	unset($_SESSION['ERROR_PATH']);
+	
+	if ($_SESSION["authenticated"] == "" or (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800))){
+		session_unset(); 
+		session_destroy(); 
+		header("Location: index.php"); /* Redirect browser */
+		exit();
+	}
+	$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+$user_Name = $_SESSION['USER'];?>
 
 <!DOCTYPE html>
 <html>
@@ -134,11 +143,9 @@
 </div>
 
 
-<?php  $user_Name = $_SESSION['username'];  // get user name ?>
 
 
 <?php
-
  // echo $user_Name ;    //test username
 
 
@@ -146,7 +153,7 @@
 
 if(isset($_POST['submit']))  
 {  
-$user_Name = $_SESSION['username'];
+$user_Name = $_SESSION['USER'];
 
 
 $t = $_POST['t'];
